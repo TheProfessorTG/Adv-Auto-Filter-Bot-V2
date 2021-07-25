@@ -222,7 +222,7 @@ async def auto_filter(bot, update):
         try:
             await bot.send_message(
                 chat_id = update.chat.id,
-                text=f"Found {(len_results)} Results For Your Query: <code>{query}</code>",
+                text=f"Share Our Group 😎 @Cinema_Chats Found {(len_results)} Results For Your Request: <code>{query}</code>",
                 reply_markup=reply_markup,
                 parse_mode="html",
                 reply_to_message_id=update.message_id
@@ -305,3 +305,11 @@ async def recacher(group_id, ReCacheInvite=True, ReCacheActive=False, bot=Bot, u
             ACTIVE_CHATS[str(group_id)] = achatId
     return 
 
+@Client.on_callback_query()
+async def cb_handlerss(client: Client , query: CallbackQuery):
+    data = query.data
+    if data == "lol":
+        await query.answer(
+            "Must Follow...!\n\nTenet movie send me ❌ \nTenet movie keep bro ❌ \nTenet movie plz ❌ \nTenet 2020 ✔\nTenet 2020 tel ✔\n\nCheck Your Spelling By Checking It In *Google* 😑 If Your Movie Name is Incorrect🤷.",
+            show_alert=True
+     )
