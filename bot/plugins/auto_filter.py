@@ -20,6 +20,8 @@ async def auto_filter(bot, update):
     """
     A Funtion To Handle Incoming Text And Reply With Appropriate Results
     """
+    KEY_WORD = update.text
+    G_SEARCH = re.sub(r' ', '+', f'{KEY_WORD}')
     group_id = update.chat.id
 
     if re.findall(r"((^\/|^,|^\.|^[\U0001F600-\U000E007F]).*)", update.text):
@@ -126,7 +128,24 @@ async def auto_filter(bot, update):
             )
         
     else:
-        return # return if no files found for that query
+        send_msg = await bot.send_message( 
+        chat_id = update.chat.id, 
+        text=f"I Couldn't Find This Movie! Make Sure That Your Spelling Is Correct. If Not, Check In Google! 😅 Also Check Out The Rules!",
+        parse_mode="html",  
+        reply_to_message_id=update.message_id,
+        reply_markup=InlineKeyboardMarkup( 
+            [
+                [
+                   InlineKeyboardButton('Check Spelling 🔎', url=f"http://google.com/search?q={G_SEARCH}")
+                ],       
+                [
+                   InlineKeyboardButton('Rules 🚫', callback_data = "lol")
+                ] 
+            ]
+        )
+    )    
+        await asyncio.sleep(7) 
+        await send_msg.delete()
     
 
     if len(results) == 0: # double check
